@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel="stylesheet">
+        <link rel="stylesheet" href="css/style.css">
+        <title>My Calendar</title>
+    </head>
+    <body>
+        <div class="container">
+            <div id="calendar" class="calendar">
+                <div class="calendar__month-year-box">
+                    <svg class="calendar__arrow-left" id="calendar__month--back">
+                            <use xlink:href="img/sprite.svg#icon-chevron-thin-left"></use>
+                    </svg>
+
+                    <span id="calendar__month" class="calendar__month"></span>
+                    <span id="calendar__year" class="calendar__year"></span>
+                    
+                    <svg class="calendar__arrow-right" id="calendar__month--fwd">
+                            <use xlink:href="img/sprite.svg#icon-chevron-thin-right"></use>
+                    </svg>
+                </div>
+                <ul id="calendar__day-names" class="calendar__day-names"></ul>
+                <div id="calendar__days"></div>
+                
+                <div class="calendar__book" id="calendar__book">
+                    <div class="calendar__book-container">
+                        <div class="calendar__book-header">
+                            <svg 
+                                class="calendar__arrow-left calendar__book-header-arrow-left"
+                                id="calendar__book-arrow-back"
+                                >
+                                <use xlink:href="img/sprite.svg#icon-chevron-thin-left"></use>
+                            </svg>
+
+                            <div class="calendar__book-header-box">
+                                <div 
+                                    class="calendar__book-header-item" 
+                                    id="calendar__book-header-item-0"
+                                    >
+                                    Sun June 1, 2018
+                                </div>
+                                <div 
+                                    class="calendar__book-header-item"
+                                    id="calendar__book-header-item-1"
+                                    >
+                                    Mon June 2, 2018
+                                </div>
+                                <div 
+                                    class="calendar__book-header-item"
+                                    id="calendar__book-header-item-2"
+                                    >
+                                    Tue June 3, 2018
+                                </div>
+                                <div 
+                                    class="calendar__book-header-item"
+                                    id="calendar__book-header-item-3"
+                                    >
+                                    Thu June 4, 2018
+                                </div>
+                                <div 
+                                    class="calendar__book-header-item"
+                                    id="calendar__book-header-item-4"
+                                    >
+                                    Fri June 5, 2018
+                                </div>
+                            </div>
+
+                            <svg 
+                                class="calendar__arrow-right calendar__book-header-arrow-right"
+                                id="calendar__book-arrow-fwd"
+                                >
+                                <use xlink:href="img/sprite.svg#icon-chevron-thin-right"></use>
+                            </svg>
+
+                            <a href="#" 
+                                class="calendar__close"
+                                onclick="bookToggle()"
+                                >
+                                &times;
+                            </a>
+
+                        </div>
+                        
+                        <div class="calendar__book-content" id="calendar__book-content">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calendar__confirm" id="calendar__confirm">
+                    <div class="calendar__confirm-container">
+                        <a href="#" 
+                            class="calendar__close calendar__close--form"
+                            onclick="confirmToggle()"
+                            >
+                            &times;
+                        </a>
+
+                        <form 
+                            action="#" 
+                            class="calendar__form" 
+                            onsubmit="event.preventDefault(); submitBookingInfo();"
+                            >
+                            <div class="calendar__form-group">
+                                <label for="name" class="calendar__form-label">Name</label>
+                                <input 
+                                    type="text"
+                                    class="calendar__form-input" 
+                                    placeholder="Name"
+                                    name="name"
+                                    id="name"
+                                    required
+                                    >
+                            </div>
+
+                            <div class="calendar__form-group">
+                                <label for="name" class="calendar__form-label">Email</label>
+                                <input 
+                                    type="email"
+                                    class="calendar__form-input" 
+                                    placeholder="example@example.com"
+                                    name="email"
+                                    id="email"
+                                    required
+                                    >
+                            </div>
+
+                            <div class="calendar__form-group">
+                                <label for="name" class="calendar__form-label">Phone</label>
+                                <input 
+                                    type="tel"
+                                    class="calendar__form-input"
+                                    id="phone" 
+                                    name="phone" 
+                                    placeholder="123-456-7890" 
+                                    pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                                    required
+                                    >
+                            </div>
+
+                            <div class="calendar__form-group">
+                                <input type="submit" 
+                                    class="calendar__form-submit"
+                                    value="submit"
+                                    >
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="calendar__message" id="calendar__message">
+                    <div class="calendar__message-container" id="calendar__message--success">
+                        <div class="calendar__message-status">
+                            Your appointment was successfully booked!<br> A confirmation
+                            email has been sent to the address provided.
+                        </div>
+                        
+                        <div class="calendar__message-info">
+                            <div class="calendar__message-info-box">
+                                Date: <span class="calendar__message-span" id="calendar__message--date">June 1, 2018 12:00 AM</span>
+                            </div>
+                            <div class="calendar__message-info-box">
+                                Name: <span class="calendar__message-span" id="calendar__message--name">John
+                                    Smith</span>
+                            </div>
+                            <div class="calendar__message-info-box">
+                                Email: <span class="calendar__message-span"
+                                    id="calendar__message--email">johnsmith@gmail.com</span>
+                            </div>
+                            <div class="calendar__message-info-box">
+                                Phone: <span class="calendar__message-span"
+                                    id="calendar__message--phone">123-456-789</span>
+                            </div>
+                            <div class="calendar__message-close calendar__message-close--success"
+                                id="calendar__message--success-close">
+                                Close
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calendar__message-container" id="calendar__message--failed">
+                        <div class="calendar__message-status">
+                            Your appointment could not be booked,<br>
+                            please try again.
+                        </div>
+                        
+                        <div class="calendar__message-info">
+                            <div class="calendar__message-close calendar__message-close--failed"
+                                id="calendar__message--failed-close">
+                                Close
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <script src="js/calendar.js"></script>
+    </body>
+</html>
